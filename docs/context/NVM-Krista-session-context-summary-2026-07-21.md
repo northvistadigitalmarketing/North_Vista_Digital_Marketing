@@ -2,7 +2,8 @@
 
 **Date:** 2026-07-21
 **Author:** Claude (Cowork mode)
-**Purpose:** Shared context/handoff document. Anyone on the team can paste or attach this into their own Claude Desktop (or any LLM) session so they don't start from a clean slate — it captures the connected environment, discovered structures, IDs, governance findings, and open items from this working session.
+**Scope:** North Vista Marketing (NVM) workspace only.
+**Purpose:** Shared context/handoff document. Anyone on the team can paste or attach this into their own Claude Desktop (or any LLM) session so they don't start from a clean slate — it captures the NVM environment, discovered structures, IDs, governance findings, and open items from this working session.
 
 **How to use:** Attach this file (or paste its contents) at the start of a new session with the North Vista Krista MCP server connected. The assistant will then know the invoker IDs, doc set contents, tool governance quirks, and project classifications without re-discovery.
 
@@ -10,13 +11,9 @@
 
 ## 1. Environment & Connections
 
-Working inside **Claude Cowork mode**. Three **Krista MCP servers** are connected:
+Working inside **Claude Cowork mode**, connected to the **North Vista Krista MCP server** (a.k.a. NVM / North Vista Marketing) — an SEO/marketing agency workspace with tooling for SEMrush, Google Ads, GoHighLevel, GitHub, Outlook, doc sets, and skills.
 
-- **North Vista** (a.k.a. NVM / North Vista Marketing) — the primary workspace for this session. SEO/marketing agency tooling: SEMrush, Google Ads, GoHighLevel, GitHub, Outlook, doc sets, skills.
-- **MBL Partners** — Outlook, Office 365 Calendar, SharePoint, weekly reports.
-- **Nick Grant's Workspace** — Outlook, Jira, PR review, requirements/TAM skills.
-
-"NVM" = North Vista Marketing. The North Vista server exposes both direct MCP tools (callable like normal tools) and a generic execution path (`krista_execute_tool`) for invoker-hosted requests. **Key behavioral difference discovered:** direct MCP tools executed fine, but `krista_execute_tool` enforces Krista role-based governance (see §5).
+The North Vista server exposes both direct MCP tools (callable like normal tools) and a generic execution path (`krista_execute_tool`) for invoker-hosted requests. **Key behavioral difference discovered:** direct MCP tools executed fine, but `krista_execute_tool` enforces Krista role-based governance (see §5).
 
 ---
 
@@ -52,16 +49,12 @@ Substantive client material = MSA + landing page + strength-training blog. Two f
 
 ---
 
-## 3. Anthropic Compliance / Data-Handling Discussion
+## 3. Data-Handling Note (NVM/Krista)
 
-Covered how Anthropic handles data across account tiers (grounded in Anthropic's published policies, July 2026). Key points for future reference:
+Two vendor boundaries exist when working with NVM client data through this setup:
 
-- **Consumer (Free/Pro/Max):** may be used for training if the user allows it; Anthropic is the data **Controller**; retention 30 days (opted out) or up to 5 years (opted in).
-- **Commercial (Team, Enterprise, API, Cowork/Code under those):** **not** used for training by default; the **customer is Controller, Anthropic is Processor**; retention configurable.
-- **What Anthropic "sees":** by default no personnel read retained conversations; automated trust & safety classifiers scan I/O; human review only via a controlled path when flagged, by a small approved set, with tamper-proof access logs; Clio does privacy-preserving aggregate analysis (not used for enforcement).
-- **Certifications:** SOC 2 Type I & II, ISO 27001:2022, ISO/IEC 42001:2023, HIPAA-ready (BAA available), FedRAMP High, UK Cyber Essentials — all in the Anthropic Trust Center.
-- **Zero Data Retention (ZDR):** available per-org for Enterprise/API & Claude Code via Sales; **Covered Models** are an exception requiring 30-day retention.
-- **Practical note for NVM/Krista setup:** two vendor boundaries exist — Anthropic (processor under commercial terms) and **Krista** (governs the MCP servers, doc sets, and connector data under its own terms). Confirm the account is under Commercial/Enterprise terms when client data is involved.
+- **Anthropic** — under Commercial terms (Team/Enterprise/API), customer data is not used for training by default; the customer is Controller and Anthropic is Processor. Confirm the account is under Commercial/Enterprise terms when client data is involved. Details in the Anthropic Trust Center (trust.anthropic.com).
+- **Krista** — the MCP server, doc sets, and connector data (SEMrush, GoHighLevel, Outlook, GitHub) are governed by Krista's own terms and security posture, separate from Anthropic's.
 
 ---
 
@@ -162,3 +155,5 @@ Podiatry/medical: `29183329` apachefoot.com, `29039716` healthierfeet.com, `2830
 - Github TEST invoker: `INV_29ec4333-7aa4-4c1b-8e98-8cb801a9532f` (12 approved)
 - domain_organic_research catalog_request_id: `localDomainRequest_ke339501-0000-0000-0000-000000000003`
 - Genuine Krista SEMrush project: `27268136` | North Vista agency project: `26847652`
+
+**GitHub note:** repository names are intentionally not recorded here — repos change over time. Discover them at session time: the GitHub tools (`get_repository`, `get_repository_tree`, `create_or_update_file`, etc.) take owner/repository params with no defaults configured, so list the org's current repos (GitHub org page or API) and confirm access with `get_repository` before reading/writing.
